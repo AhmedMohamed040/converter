@@ -1,5 +1,5 @@
 # converter
-<<<<<<< HEAD
+Converter app convert different unit, The intent of this app is to provide a convenient means to convert between the various units of measurement within different systems.
 
 ## Project setup
 ```
@@ -25,8 +25,4 @@ npm run test:unit
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-=======
->>>>>>> 3f63e57a24a6709f85253c73a6499ab04a2f33f2
+<a>https://converter-t.netlify.app</a>
