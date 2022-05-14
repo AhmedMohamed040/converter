@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,500;1,700&display=swap');
+$color1: #463f3a;
+$color2: #8a817c;
+$color3: #bcb8b1;
+$color4: #f4f3ee;
+$color5: #f4f2f2;
+$color6: #e0afa0;
+
+
+.el-collapse-item__header {
+    background: transparent !important;
+    width: 50%;
+   
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
+    opacity: .7;
+  }
+ .ro > div {
+    padding: 39px;
+    span {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      color: $color1 !important;
+    } 
+    
+  }
+  .el-divider__text {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    background-color: rgb(188, 184, 177);
+    color: $color4;
+  
+   
+  }
+ .el-button--info {
+    background-color: $color2;
+    &:hover {
+      background-color: $color1;
+    } 
+  }
+  span > a {
+    text-decoration: none;
+  }
+ span > a > svg:first-child {
+   
+   margin-right: 11px !important;
+   margin-top: 1px;
+ }
+ span > a > svg {
+   color: $color4;
+ }

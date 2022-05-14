@@ -1,0 +1,23 @@
+
+$color1: #535a62;
+$color2: #Da4f53;
+$color3: #bba89b;
+$color4: #af9273;
+$color5: #f4f2f2;
+
+$bg-color: #bcb8b1;
+$tx-color:#020202;
+.home {
+  height: 100vh !important;
+  height: -webkit-fill-available;
+  overflow-x: hidden;
+  overflow-y:auto;
+  background-color: $bg-color;
+  .sd-bar {
+    height: 100vh;
+
+    padding: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}
