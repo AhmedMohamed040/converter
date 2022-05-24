@@ -1,7 +1,7 @@
 <template>
   <main>
     <Transition appear>
-      <div class="container-fluid cot-f" @load="key()">
+      <div class="container-fluid cot-f" @load="[key(), show()]">
         <div class="row">
           <div class="col-md-12 ruslt">
             <span class="p-rst">
@@ -122,7 +122,7 @@
                 for="year"
                 class="pls-m-l form-cnt-l-placeholder"
                 required="required"
-                >{{ k == "Math" ? pNumber : pNumber2 }}</label
+                >{{ pNumber }}</label
               >
               <div class="btn-group">
                 <button
@@ -173,7 +173,7 @@
                 for="year"
                 class="pls-m-r form-cnt-r-placeholder"
                 required="required"
-                >{{ pNumber2 }}</label
+                >{{ k == "Math" ? pNumber : pNumber2  }}</label
               >
               <div class="btn-group">
                 <button
@@ -429,6 +429,7 @@ export default {
   methods: {
     ...mapMutations(["update", "remove"]),
     conve() {
+      try {
       let hav = Number(this.value1);
       let hab = Number(this.$store.state.valueB);
 
@@ -453,6 +454,11 @@ export default {
           console.log("c2");
           this.open4();
         }
+      } } catch(e) {
+
+       this.open3();
+      
+        return e;
       }
     },
     show() {
@@ -469,9 +475,9 @@ export default {
       this.pNumber = val2;
       this.$store.commit("switchVal");
     },
-    async keys() {
+     keys() {
       // to display the names in dropdown
-      let key = await this.$store.state[this.k];
+      let key = this.$store.state[this.k];
       let cov = Object.keys(key || this.k);
       this.parts = cov;
     },
@@ -511,7 +517,7 @@ export default {
     open3: function () {
       ElNotification.warning({
         title: "Warning",
-        message: "Try to select which " + this.k + " you want to convert.",
+        message: "Try to select which way or unit " + this.k + " you want to convert.",
         offset: 100,
       });
     },
@@ -520,6 +526,7 @@ export default {
       console.log(name1, this.k);
       this.pNumber = name1;
       this.$store.state.valueA = v1;
+      this.show();
       console.log(this.$store.state.valueA);
     },
     getValue2(name2) {
@@ -527,6 +534,7 @@ export default {
       console.log(name2);
       this.pNumber2 = name2;
       this.$store.state.valueB = v2;
+      this.show();
       console.log(this.$store.state.valueB);
     },
     showValues() {

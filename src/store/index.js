@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import { ElNotification } from "element-plus";
 
 export default createStore({
   state: {
@@ -96,7 +97,9 @@ export default createStore({
           break;
 
         case "Colors":
-          if (state.valueA) {
+          
+          console.log('here');
+          if (state.attr == "Rgb") {
             // eslint-disable-next-line no-inner-declarations
             let str = state.cm;
             let pattern = /([^\s+])/gm;
@@ -128,9 +131,17 @@ export default createStore({
                 state.color = "#" + r + g + b;
               }
             } else {
+              let warn = function () {
+                ElNotification.warning({
+                  title: "Warning",
+                  message: "Try to select which way or unit " + this.k + " you want to convert.",
+                  offset: 100,
+                });}
+                warn();
               return (state.count = "Invalid input color");
             }
-          } if(state.cm) {
+            
+          } if(state.attr == 'Hex') {
             let pattern = /([^\s+])/gm;
             let str = state.cm;
             let rgb = str.match(pattern).join("");
@@ -162,10 +173,18 @@ export default createStore({
               return state.count = "rgb("+ (isPct ? r + "%," + g + "%," + b + "%" : +r + "," + +g + "," + +b) + ")";
             
             } else {
+              
+              let warn = function () {
+                ElNotification.warning({
+                  title: "Warning",
+                  message: "Try to select which way or unit " + this.k + " you want to convert.",
+                  offset: 100,
+                });}
+                warn();
               return "Invalid input color";
             }
           }
-
+        
           break;
 
         /*

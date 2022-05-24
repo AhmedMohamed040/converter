@@ -2,16 +2,14 @@
   <div class="cr-nav">
     <div class="nav">
       <ul>
-      <!---
-<li class="list active">
+      <!-- <li class="list active">
           <router-link to="/" @click="navMove()">
             <span class="icon">
               <font-awesome-icon icon="house" />
             </span>
             <span class="text">Home</span>
           </router-link>
-        </li>
-      -->  
+        </li> -->  
         <li class="list active">
           <a href="#" @click="[reset(), navMove()]">
             <span class="icon"><font-awesome-icon icon="rotate-left" /></span>
@@ -52,18 +50,19 @@ export default {
     color: {
       default: {}
     },
-     value1: String,
     
   },
+  
   data() {
     return {
+       value1: null,
        go: false,
       value2: this.$store.state.valueB,
       pNumber2: 0 || "Milli(mm)",
       pNumber: 0 || "Centi(cm)",
       parts: "",
-      k: 0 || "Lengths",
-      cr: null || this.$store.state.color,
+      ke: this.$store.state.ky || "Lengths",
+     
     };
   },
 
@@ -71,14 +70,20 @@ export default {
     this.keys();
   },
   computed: {
-    ...mapState(["ky", "valueB", "count"]),
+    ...mapState(["ky", "valueB", "count", "color", "cm", "valA", "valB"]),
     counter() {
       return this.$store.state.count;
     },
   },
   watch: {
+    count(val) {
+      this.rsult = val;
+    },
+    cm(val) {
+      this.value1 = val;
+    },
     ky(val) {
-      this.k = val;
+      this.ke = val;
       this.keys();
     },
     valueB(val) {
@@ -87,40 +92,49 @@ export default {
     color(val) {
       this.cr = val;
       let color = this.$refs.color;
-      
-      console.log(color);
       return (color.style.background = this.cr);
+    },
+    valA(val) {
+      this.pNumber = val;
+    },
+    valB(val) {
+      this.pNumber2 = val;
     },
   },
   methods: {
     ...mapMutations(["update", "remove"]),
-    conve() {
+   conve() {
+      try {
       let hav = Number(this.value1);
       let hab = Number(this.$store.state.valueB);
-    
 
-             
-        
-         if(this.k == "Colors") {
-         this.open1();
-           this.$store.commit("conve");
-        }else {
+      console.log(Object.keys(this.$store.state[this.ke])[0]);
 
-    if(isNaN(hav) === false && hav !== null) {
-          if(hav != 0 && hab != 0) {
-               this.open1();
-                 this.$store.commit("conve");
-             }else {
-               this.open3();
-             }
-        }
-    
-        else {
-          console.log('c2');
+      if (this.ke == "Colors") {
+        this.$store.commit("conve");
+        this.value1 == "" ||
+        this.$store.state.valueA == null ||
+        this.$store.state.valueB == null
+          ? this.open3() : '';
+  
+      } else {
+        if (isNaN(hav) === false && hav !== null) {
+          if (hav != 0 && hab != 0) {
+            this.open1();
+            this.$store.commit("conve");
+          } else {
+            this.open3();
+          }
+        } else {
+          console.log("c2");
           this.open4();
+        }
+      } } catch(e) {
 
-        }
-        }
+       this.open3();
+      
+        return e;
+      }
     },
     show() {
       this.$store.commit("show", {
@@ -129,10 +143,10 @@ export default {
       });
     },
       
-    async keys() {
+    keys() {
       // to display the names in dropdown
-      let key = await this.$store.state[this.k];
-      let cov = Object.keys(key || this.k);
+      let key = this.$store.state[this.ke];
+      let cov = Object.keys(key || this.ke);
       this.parts = cov;
     },
     navMove() {
@@ -146,7 +160,7 @@ export default {
     },
     
   display(p) {
-    this.k = p;
+    this.ke = p;
     this.$store.commit("display", {
       a: this.value1,
     });
@@ -182,23 +196,25 @@ export default {
     open3: function () {
       ElNotification.warning({
         title: "Warning",
-        message: "Try to select which " + this.k + " you want to convert.",
+        message: "Try to select which way or unit " + this.k + " you want to convert.",
         offset: 100,
         
       });
     },
   getValue(name1) {
-    let v1 = this.$store.state[this.k][name1];
-    console.log(name1, this.k);
+    let v1 = this.$store.state[this.ke][name1];
+    console.log(name1, this.ke);
     this.pNumber = name1;
     this.$store.state.valueA = v1;
+    this.show();
     console.log(this.$store.state.valueA);
   },
   getValue2(name2) {
-    let v2 = this.$store.state[this.k][name2];
+    let v2 = this.$store.state[this.ke][name2];
     console.log(name2);
     this.pNumber2 = name2;
     this.$store.state.valueB = v2;
+    this.show();
     console.log(this.$store.state.valueB);
   },
   },
